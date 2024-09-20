@@ -43,7 +43,7 @@ This is a chat application built with FastAPI, MongoDB, and OpenAI's API. The ap
 1. Run the application:
 
    ```sh
-   uvicorn main:app --reload
+   python main.py
    ```
 
 2. The application will be available at `http://127.0.0.1:8000`.
