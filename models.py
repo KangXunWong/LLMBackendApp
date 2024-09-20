@@ -1,26 +1,28 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, Field
 from typing import Optional, List
 from uuid import UUID
+from bson import ObjectId
 
 class baseConversation(BaseModel):
+    _id: ObjectId
     uuid: UUID
     id: str
 
 class Conversation(BaseModel): 
     name: str
     params: Optional[dict] = {"additionalProp1": str}
-    additionalProp1: Optional[dict]
+    additionalProp1: Optional[dict] = Field(default=None)
 
 class Message(BaseModel): 
-    content: Optional[str]
-    refusal: Optional[str]
-    tool_calls: Optional[list]
+    content: Optional[str] = Field(default=None)
+    refusal: Optional[str] = Field(default=None)
+    tool_calls: Optional[list] = Field(default=None)
     role: str
 
 class Choices(BaseModel): 
     index: int
     message: Message
-    logprobs: Optional[dict]
+    logprobs: Optional[dict] = Field(default=None)
     finish_reason: str
 
 class Usage(BaseModel): 

@@ -2,15 +2,7 @@ import functools
 import logging
 from logging.handlers import TimedRotatingFileHandler  # For daily rotation
 from contextlib import redirect_stdout
-
-# Configure logging format (customize as needed)
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(module)s - %(message)s',
-    handlers=[TimedRotatingFileHandler('app.log', when='midnight', backupCount=7), logging.StreamHandler()],   # Daily rotation,
-)
-
-logger=logging
+from datetime import datetime
 
 def log_function(func):
     """Decorator to log function execution, print statements, and validator errors.

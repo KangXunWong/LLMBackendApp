@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     DB_URL: str = Field(default='', env='DB_URL')
     DB_NAME: str = Field(default='', env='DB_NAME')
     BASE_URL: str = Field(default='', env='BASE_URL')
-    PORT: str = Field(default='', env='PORT')
+    PORT: int = Field(default='', env='PORT')
 
     class Config:
         env_file = os.path.join(ENV_PATH, ENV_FILE)
