@@ -1,5 +1,6 @@
 import functools
 import logging
+import logging.config
 from logging.handlers import TimedRotatingFileHandler  # For daily rotation
 from contextlib import redirect_stdout
 from datetime import datetime
@@ -14,7 +15,7 @@ def log_function(func):
         The decorated function.
     """
 
-    logger = logging.getLogger(func.__module__)  # Get logger for the current module
+    logger = logging.getLogger()  # Get logger for the current module
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -25,7 +26,7 @@ def log_function(func):
         # Capture print statements within the function
         def captured_print(*print_args, **print_kwargs):
             logger.info(f"Print inside {func.__name__}: {print_args[0]}")
-                
+
         try:
             with redirect_stdout(captured_print):
                 result = func(*args, **kwargs)
@@ -38,3 +39,6 @@ def log_function(func):
         #     print = original_print  # Restore original print function
 
     return wrapper
+
+logging.config.fileConfig("logging.ini")
+log = logging.getLogger()

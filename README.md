@@ -1,100 +1,119 @@
-# Chat Application
+# Project Name
 
-This is a chat application built with FastAPI, MongoDB, and OpenAI's API. The application allows users to create, retrieve, update, and delete conversations, as well as create prompts within conversations.
+## Overview
 
-## Installation
+This project is designed to provide a robust backend service for managing conversations and generating responses using OpenAI's GPT-4 model. The system is built with FastAPI and MongoDB, ensuring high performance and scalability.
 
-1. Clone the repository:
+## System Design
+
+### Architecture
+
+The system is composed of several key components:
+
+1. **FastAPI Application**: The core of the backend service, handling HTTP requests and routing.
+2. **MongoDB**: A NoSQL database used to store conversation data.
+3. **OpenAI Integration**: Utilizes OpenAI's API to generate responses based on user queries.
+
+### Key Modules
+
+- **`main.py`**: Entry point of the application. Configures and starts the FastAPI server.
+- **`routes.py`**: Defines the API endpoints and their respective handlers.
+- **`services.py`**: Contains business logic for creating and updating conversations.
+- **`db.py`**: Manages database connections and collections.
+- **`settings.py`**: Configuration settings for the application, including environment variables.
+- **`generatefakedata.py`**: Utility script for generating and inserting sample data into the database.
+- **`log.py`**: Configures logging for the application.
+
+### Data Models
+
+The data models are defined in `models.py` and include:
+
+- **`Conversation`**: Represents a conversation document.
+- **`Message`**: Represents individual messages within a conversation.
+- **`ChatCompletion`**: Represents the completion response from OpenAI.
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- MongoDB
+- OpenAI API Key
+
+### Installation
+
+1. **Clone the repository**:
 
    ```sh
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/your-repo/project-name.git
+   cd project-name
    ```
 
-2. Create a virtual environment:
+2. **Create and activate a virtual environment**:
 
    ```sh
    python -m venv venv
    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
    ```
 
-3. Install the dependencies:
+3. **Install dependencies**:
 
    ```sh
    pip install -r requirements.txt
    ```
 
-4. Set up environment variables:
-   - Create a `.env` file in the root directory.
-   - Add the following environment variables:
-     ```env
-     ENVIRONMENT=development
-     SECRET_KEY=your_secret_key
-     OPENAI_API_KEY=your_openai_api_key
-     OPENAI_MODEL=gpt-4o-mini
-     DB_URL=your_mongodb_url
-     DB_NAME=your_database_name
-     BASE_URL=127.0.0.1
-     PORT=8000
-     ```
+4. **Set up environment variables**:
+   Create a `.env` file in the root directory and add the following:
+   ```env
+   ENVIRONMENT=dev
+   SECRET_KEY=your_secret_key
+   OPENAI_API_KEY=your_openai_api_key
+   OPENAI_MODEL=gpt-4o-mini
+   DB_URL=your_mongodb_url
+   DB_NAME=your_db_name
+   BASE_URL=127.0.0.1
+   PORT=8000
+   ```
 
-## Usage
+### Starting the Server
 
-1. Run the application:
+1. **Run the FastAPI server**:
 
    ```sh
    python main.py
    ```
 
-2. The application will be available at `http://127.0.0.1:8000`.
+   This will start the server at `http://127.0.0.1:8000`.
 
-## Code Logic
+### Generating Sample Data
 
-### `main.py`
+To generate and insert sample data into the MongoDB collection, run:
 
-- The entry point of the application.
-- Configures logging and starts the FastAPI server.
+```sh
+python generatefakedata.py
+```
 
-### `settings.py`
+### Logging
 
-- Contains the `Settings` class which loads environment variables.
+Logging is configured via logging.ini. Logs are written to a file named with the current date in the format YYYY-MM-DD_Uvicorn.log.
 
-### `db.py`
+### API Endpoints
 
-- Sets up the MongoDB client and the OpenAI client.
-- Provides access to the `chatresponsecollection` in MongoDB.
+- `POST /conversations`: Create a new conversation.
+- `GET /conversations/{item_id}`: Retrieve a conversation by ID.
+- `GET /conversations/{item_id}/history`: Retrieve the history of a conversation.
+- `PUT /conversations/{item_id}`: Update a conversation by ID.
+- `DELETE /conversations/{item_id}`: Delete a conversation by ID.
+- `POST /conversations/{item_id}/prompts`: Add a prompt to an existing conversation.
 
-### `models.py`
+### Limitations
 
-- Defines the data models used in the application, such as `ChatCompletion`, `Choices`, `Message`, and `Usage`.
+- The `POST /conversations/{item_id}/prompts` API does not work as expected due to CORS issues when testing on an Ubuntu server.
 
-### `services.py`
+### Contributing
 
-- Contains CRUD operations for conversations and prompts.
-- Functions include:
-  - `create_conversation_crud`: Creates a new conversation and stores it in MongoDB.
-  - `retrieve_conversation_crud`: Retrieves all conversations.
-  - `update_conversation_crud`: Updates an existing conversation.
-  - `retrieve_conversation_history`: Retrieves a conversation by its ID.
-  - `delete_conversation_crud`: Deletes a conversation by its ID.
-  - `create_prompt_crud`: Adds a prompt to an existing conversation.
+Please read CONTRIBUTING.md for details on our code of conduct and the process for submitting pull requests.
 
-### `log.py`
+### License
 
-- Configures logging for the application.
-
-### `logging.conf`
-
-- Configuration file for logging, specifying loggers, handlers, and formatters.
-
-### `Dockerfile`
-
-- Docker configuration for containerizing the application.
-
-### `requirements.txt`
-
-- Lists all the dependencies required for the application.
-
-## License
-
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details. ```
