@@ -1,0 +1,16 @@
+name: Automatic Tagging
+on:
+  push:
+    branches:
+      - master
+      - dev/*
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create tag
+        run: |
+          git tag -a "v$(git rev-parse --short HEAD)" -m "Automatic tag for push"
+          git push origin --tags
