@@ -19,5 +19,6 @@ jobs:
           git config --local user.name "githubactions"
       - name: Create tag
         run: |
-          git tag -a "v$(git rev-parse --short HEAD)" -m "Automatic tag for push"
+          TAG_NAME="$(date +'%Y%m%d%H%M%S')-$(git rev-parse --abbrev-ref HEAD)-$(git rev-parse --short HEAD)"
+          git tag -a "$TAG_NAME" -m "Automatic tag for push from $(git rev-parse --abbrev-ref HEAD)"
           git push origin --tags
